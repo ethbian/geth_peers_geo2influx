@@ -43,16 +43,18 @@ if geth_running != 0:
     raise SystemExit('Service {} is not running.'.format(SERVICE))
 
 try:
-    db_client = influxdb.InfluxDBClient(host=DB_HOST, port=DB_PORT, database=DB_NAME)
-except Exception as e:
-    raise SystemExit('Error getting peer list: {}'.format(e))
-
-try:
-    admin_peers = subprocess.check_output('{} {}{} {}'.\
-                          format(GETH_PATH, 'attach ipc:', IPC_PATH, '--exec admin.peers'),\
-                          shell=True)
+    db_client = influxdb.InfluxDBClient(
+        host=DB_HOST, port=DB_PORT, database=DB_NAME)
 except Exception as e:
     raise SystemExit('Error connecting to database: {}'.format(e))
+
+try:
+    admin_peers = subprocess.check_output('{} {}{} {}'.
+                                          format(GETH_PATH, 'attach ipc:',
+                                                 IPC_PATH, '--exec admin.peers'),
+                                          shell=True)
+except Exception as e:
+    raise SystemExit('Error getting peer list: {}'.format(e))
 
 try:
     geodb = geoip2.database.Reader(GEODB_PATH)
@@ -67,7 +69,8 @@ for line in admin_peers.splitlines():
         if ip:
             geo = geodb.city(ip)
             peer['measurement'] = DB_TABLE
-            peer['time'] = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+            peer['time'] = datetime.datetime.utcnow().strftime(
+                '%Y-%m-%dT%H:%M:%S.%fZ')
             peer['fields'] = {
                 'lat': geo.location.latitude,
                 'lon': geo.location.longitude,
