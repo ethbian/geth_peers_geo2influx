@@ -33,6 +33,6 @@ A python script to list ethereum geth peers IPs, get their geolocation and send 
     1575737543027645952 95.216.246.xyz (None FI)           60.1717 24.9349
 
 ## use case
-Here's a [screenshot](https://ethbian.org/images/grafana_worldmap_plugin.png) of Grafana Worldmap plugin using provided data.
+Here's a [screenshot](https://ethbian.org/images/grafana_geth_peers.jpg) of Grafana Worldmap plugin using provided data.
 
 Pull requests are more than welcome if you're fixing something
