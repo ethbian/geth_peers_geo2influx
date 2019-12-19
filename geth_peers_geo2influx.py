@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """
+v0.2
 Use the script to:
 - get IPs of peers connected to Ethereum geth daemon
 - get geolocation information of these addresses
@@ -74,7 +75,7 @@ for line in admin_peers.splitlines():
             peer['fields'] = {
                 'lat': geo.location.latitude,
                 'lon': geo.location.longitude,
-                'city': '{} ({} {})'.format(ip, geo.city.name, geo.registered_country.iso_code)
+                'city': '{} ({} {})'.format(ip, unicode(geo.city.name).encode('utf-8'), geo.registered_country.iso_code)
             }
         peers.append(peer)
 
